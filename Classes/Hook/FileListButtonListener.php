@@ -69,6 +69,12 @@ class FileListButtonListener
             return $buttons;
         }
         try {
+            $currentFolder = $this->getCurrentFolder();
+            if (!$currentFolder->checkActionPermission('write')
+                || !$currentFolder->getStorage()->checkUserActionPermission('add', 'File')
+            ) {
+                return $buttons;
+            }
             $button = GeneralUtility::makeInstance(LinkButton::class);
             $button->setShowLabelText(true);
             $button->setIcon($this->iconFactory->getIcon('actions-file-add', Icon::SIZE_SMALL));
